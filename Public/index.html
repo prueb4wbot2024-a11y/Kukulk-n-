@@ -1,28 +1,27 @@
-/* KUKULCÁN PRO MAX - CORE ENGINE 
-   Fusión: Kukulcán + Chaac + Águila 
-*/
-const express = require('express');
-const { Server } = require('socket.io');
-const Database = require('better-sqlite3');
-const path = require('path');
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KUKULCAN PRO MAX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>HAAPPS <span style="color:var(--oro-sacro)">KUKULCÁN</span></h1>
+        <div class="frecuencia">12.3 Hz - Sincronizado</div>
+    </header>
 
-const app = express();
-const db = new Database('./kukulcan.sqlite');
+    <main id="app-container">
+        <section class="card-pyramid">
+            <h2>Portal de Ventas Águila</h2>
+            <div id="carrito-jade"></div>
+            <button onclick="enviarAlTemplo()">ENVIAR OFRENDA (PEDIDO)</button>
+        </section>
+    </main>
 
-// Configuración de carpetas para el ejecutable
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
-
-// Registro de pedidos con estética Águila
-app.post('/api/pedidos', (req, res) => {
-  const { cliente, items, total, tipo } = req.body;
-  const stmt = db.prepare('INSERT INTO pedidos (cliente, total, tipo, estado) VALUES (?, ?, ?, ?)');
-  const info = stmt.run(cliente, total, tipo, 'pendiente');
-  
-  // Notificación en tiempo real a Cocina (Chaac)
-  io.emit('nuevo_pedido', { id: info.lastInsertRowid, cliente, items, total });
-  res.json({ ok: true, folio: info.lastInsertRowid });
-});
-
-const server = app.listen(3000, () => console.log("☀️ El Quinto Sol ha despertado en el puerto 3000"));
-const io = new Server(server);
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        // Lógica de integración plus...
+    </script>
+</body>
+</html>
